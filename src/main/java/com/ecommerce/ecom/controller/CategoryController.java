@@ -1,5 +1,6 @@
 package com.ecommerce.ecom.controller;
 
+import com.ecommerce.ecom.appValues.PaginationDefault;
 import com.ecommerce.ecom.model.Category;
 import com.ecommerce.ecom.payload.CategoryDto;
 import com.ecommerce.ecom.payload.CategoryResponse;
@@ -23,8 +24,10 @@ public class CategoryController {
 
 
     @GetMapping("api/public/catgories")
-    public ResponseEntity<CategoryResponse> showALlCategories(){
-        CategoryResponse categories = categoryService.showALlCategories();
+    public ResponseEntity<CategoryResponse> showALlCategories
+            (@RequestParam(name = "pageNumber", defaultValue = PaginationDefault.pageNumber) Integer pageNumber,
+             @RequestParam(name= "pageSize", defaultValue = PaginationDefault.pageSize) Integer pageSize){
+        CategoryResponse categories = categoryService.showALlCategories(pageNumber, pageSize);
         return ResponseEntity.ok(categories);
     }
 
