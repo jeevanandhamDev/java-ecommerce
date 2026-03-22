@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
     ModelMapper modelMapper;
 
     @Override
-    public CategoryResponse showALlCategories(Integer pageNumber, Integer pageSize) {
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+    public CategoryResponse showALlCategories(Integer pageNumber, Integer pageSize, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sort);
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
         List<Category> categories =  categoryPage.getContent();

@@ -26,8 +26,10 @@ public class CategoryController {
     @GetMapping("api/public/catgories")
     public ResponseEntity<CategoryResponse> showALlCategories
             (@RequestParam(name = "pageNumber", defaultValue = PaginationDefault.pageNumber) Integer pageNumber,
-             @RequestParam(name= "pageSize", defaultValue = PaginationDefault.pageSize) Integer pageSize){
-        CategoryResponse categories = categoryService.showALlCategories(pageNumber, pageSize);
+             @RequestParam(name= "pageSize", defaultValue = PaginationDefault.pageSize) Integer pageSize,
+             @RequestParam(name = "sortBy", defaultValue = "categoryId", required = false) String sortBy,
+             @RequestParam(name = "sortDirection", defaultValue = "asc", required = false) String sortDirection){
+        CategoryResponse categories = categoryService.showALlCategories(pageNumber, pageSize, sortBy, sortDirection);
         return ResponseEntity.ok(categories);
     }
 
